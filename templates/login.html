@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, width=device-width">
+
+        <link href="../static/logo.png" rel="icon">
+
+        <link href="../static/style.css" rel="stylesheet" type="text/css">
+
+        <title>Grade Calculator: Login</title>
+    </head>
+
+    <body>
+        <div class="banner">
+            <div class="center">
+            <h1>Login</h1>
+            <form method="post">
+                <div class="txt_field">
+                    <input type="text" name="username" required value="{{ username }}">
+                    <span></span>
+                    <label>Username</label>
+                </div>
+                <div class="txt_field">
+                    <input type="password" name="password" required>
+                    <span></span>
+                    <label>Password</label>
+                </div>
+                {% if incorrect %}
+                    <p>Username or password is incorrect</p>
+                    <br>
+                {% elif incorrect2 %}
+                    <p>Please fill out all fields</p>
+                    <br>
+                {% endif %}
+                <input type="submit" value="Login">
+                <div class="signup_link">
+                    No account? <a class="nav-link" href="/register">Sign Up</a>
+                </div>
+            </form>
+            </div>
+        </div>
+
+    {% if get_flashed_messages() %}
+        <header>
+            <div class="alert alert-primary mb-0 text-center" role="alert">
+                {{ get_flashed_messages() | join(" ") }}
+            </div>
+        </header>
+    {% endif %}
+
+    </body>
+
+</html>

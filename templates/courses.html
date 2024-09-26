@@ -1,0 +1,102 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Courses
+{% endblock %}
+
+{% block main %}
+    <br>
+    <div class="grades">
+        <h1>Saved Courses</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Course Name</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Current Category Grade</th>
+                    <th scope="col">Weight Percentage</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% if courses %}
+                {% for course in courses %}
+                    <tr>
+                        <th>{{ course.course_name }}</th>
+                        <td>{{ course.category }}</td>
+                        <td>{{ course.numerator }}/{{ course.denominator }}</td>
+                        <td>{{ course.weight }}%</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <th>E.g. (Algebra)</th>
+                    <td>ASSIGNMENTS</td>
+                    <td>100/100</td>
+                    <td>40%</td>
+                </tr>
+                <tr>
+                    <th>E.g. (Algebra)</th>
+                    <td>TESTS</td>
+                    <td>70/80</td>
+                    <td>60%</td>
+                </tr>
+            {% endif %}
+            </tbody>
+        </table>
+        <h3>Total Saved Courses: {{ num_courses }}</h3>
+        <hr>
+        <br>
+
+        <h1>Use A Course Template</h1>
+        <form action="/use" method="post">
+            <select name="course_name" class="course_name">
+                <option value="" disabled selected>Select a Course</option>
+
+                {% for unique in uniques %}
+                    <option value="{{ unique.course_name }}">{{ unique.course_name }}</option>
+                {% endfor %}
+
+            </select>
+            <div class="buttons">
+                <button class="button" type="submit">Use</button>
+            </div>
+        </form>
+
+        <hr>
+        <br>
+
+        <h1>Update A Course</h1>
+        <form action="/courses1" method="post">
+            <select name="course_name" class="course_name">
+                <option value="" disabled selected>Select a Course</option>
+
+                {% for unique in uniques %}
+                    <option value="{{ unique.course_name }}">{{ unique.course_name }}</option>
+                {% endfor %}
+
+            </select>
+            <div class="buttons">
+                <button class="button" type="submit">Update</button>
+            </div>
+        </form>
+
+        <hr>
+        <br>
+
+        <h1>Delete A Course</h1>
+        <form action="/courses2" method="post">
+            <select name="course_name" class="course_name">
+                <option value="" disabled selected>Select a Course</option>
+
+                {% for unique in uniques %}
+                    <option value="{{ unique.course_name }}">{{ unique.course_name }}</option>
+                {% endfor %}
+
+            </select>
+            <div class="buttons">
+                <button class="button" type="submit">Delete</button>
+            </div>
+        </form>
+        <br><br>
+    </div>
+{% endblock %}

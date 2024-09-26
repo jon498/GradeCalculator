@@ -1,0 +1,153 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Update
+{% endblock %}
+
+{% block main %}
+    <br>
+    <div class="grades">
+        {% if edit %}
+            <h1>Edit '{{ course_name }}' Course</h1>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Course Name</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Current Category Grade</th>
+                        <th scope="col">Weight Percentage</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for update in updates %}
+                        <tr>
+                            <th>{{ update.course_name }}</th>
+                            <td>{{ update.category }}</td>
+                            <td>{{ update.numerator }}/{{ update.denominator }}</td>
+                            <td>{{ update.weight }}%</td>
+                        </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+
+            <form action="/update" method="post">
+                <div class="grades">
+                    <h1>Change Category Information</h1>
+                    <br>
+                    <div class="select">
+                        <select name="category" id="category">
+                            <option value="" disabled selected>Select a Category</option>
+
+                            {% for update in updates %}
+                                <option value="{{ update.category }}">{{ update.category }}</option>
+                            {% endfor %}
+
+                        </select>
+                    </div>
+                    <br>
+                    <div class="inputBox">
+                        <span>Current Category Grade</span>
+                        <div id="button">
+                            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="numerator" name="numerator" placeholder="e.g. 90" type="number" value="{{ numerator }}">
+                            <h2>out of</h2>
+                            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="denominator" name="denominator" placeholder="90" type="number" value="{{ denominator }}">
+                        </div>
+
+                        <span>Weight Percentage</span>
+                        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="weight" name="weight" placeholder="e.g. 10" type="number" value="{{ weight }}">
+                    </div>
+                    <div class="buttons">
+                        <button class="button" type="submit">Save</button>
+                    </div>
+            </form>
+            <hr>
+
+            <form action="/back2" method="post">
+                <div class="buttons">
+                    <button class="button" type="submit">Back</button>
+                </div>
+            </form>
+        {% else %}
+            <h1>Update A Course</h1>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Course Name</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Current Category Grade</th>
+                        <th scope="col">Weight Percentage</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for update in updates %}
+                        <tr>
+                            <th>{{ update.course_name }}</th>
+                            <td>{{ update.category }}</td>
+                            <td>{{ update.numerator }}/{{ update.denominator }}</td>
+                            <td>{{ update.weight }}%</td>
+                        </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+
+            <form action="/edit" method="post">
+                <div class="buttons">
+                    <button class="button" type="submit">Edit</button>
+                </div>
+            </form>
+            <hr>
+
+            <form action="/update1" method="post">
+                <div class="grades">
+                    <br>
+                    <h1>Add A Category</h1>
+                    <div class="inputBox">
+                        <span>Category</span>
+                        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="category" name="category" placeholder="e.g. Assignments" type="text" value="{{ category }}">
+
+                        <span>Current Category Grade</span>
+                        <div id="button">
+                            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="numerator" name="numerator" placeholder="e.g. 90" type="number" value="{{ numerator }}">
+                            <h2>out of</h2>
+                            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="denominator" name="denominator" placeholder="90" type="number" value="{{ denominator }}">
+                        </div>
+
+                        <span>Weight Percentage</span>
+                        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="weight" name="weight" placeholder="e.g. 10" type="number" value="{{ weight }}">
+                    </div>
+                    <div class="buttons">
+                        <button class="button" type="submit">Add</button>
+                    </div>
+            </form>
+            <hr>
+            <br>
+            <h1>Delete A Category</h1>
+            <br>
+            <form action="/update2" method="post">
+                <div class="select">
+                    <select name="category" id="category">
+                        <option value="" disabled selected>Select a Category</option>
+
+                        {% for update in updates %}
+                            <option value="{{ update.category }}">{{ update.category }}</option>
+                        {% endfor %}
+
+                    </select>
+                </div>
+                <div class="buttons">
+                    <button class="button" type="submit">Delete</button>
+                </div>
+            </form>
+            <hr>
+            <form action="/back" method="post">
+                <div class="buttons">
+                    <button class="button" type="submit">Back</button>
+                </div>
+            </form>
+        {% endif %}
+    </div>
+{% endblock %}

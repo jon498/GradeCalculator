@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, width=device-width">
+
+        <link href="../static/logo.png" rel="icon">
+
+        <link href="../static/style.css" rel="stylesheet" type="text/css">
+
+        <title>Grade Calculator: Home</title>
+    </head>
+
+    <body>
+        <div class="banner">
+            <div class="header">
+                <h1>Grade <img src="./static/logo.png" width="75" height="75"> Calculator</h1>
+            </div>
+            <hr>
+            <div class="content">
+                <h1>YOUR ONE STOP SHOP FOR</h1>
+                <h1>CALCULATING GRADES</h1>
+                <br>
+                <h3>Figure out the grades you need to succeed.</h3>
+                <div class="buttons">
+                    <form action="/grades">
+                        <button type="submit" class="button"><span></span>Input Grades</button>
+                    </form>
+
+                    {% if not session["user_id"] %}
+                        <form action="/login">
+                            <button type="submit" class="button"><span></span>Login/Create Account</button>
+                        </form>
+                    {% else %}
+                        <form action="/courses">
+                            <button type="submit" class="button"><span></span>Courses</button>
+                        </form>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>

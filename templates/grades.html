@@ -1,0 +1,145 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Grades
+{% endblock %}
+
+{% block main %}
+    <br>
+    <div class="grades">
+        <h1>Calculate "What If" Grades</h1>
+        {% if template == False %}
+            <form action="/grades" method="post">
+                <div class="grades">
+                    <h3>Input information about course and current grades</h3>
+                    <br>
+                    <div class="inputBox">
+                        <span>Category</span>
+                        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="category" name="category" placeholder="e.g. Assignments" type="text" value="{{ category }}">
+
+                        <span>Current Category Grade</span>
+                        <div id="button">
+                            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="numerator" name="numerator" placeholder="e.g. 90" type="number" value="{{ numerator }}">
+                            <h2>out of</h2>
+                            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="denominator" name="denominator" placeholder="90" type="number" value="{{ denominator }}">
+                        </div>
+
+                        <span>Weight Percentage</span>
+                        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="weight" name="weight" placeholder="e.g. 10" type="number" value="{{ weight }}">
+                    </div>
+                    <div class="buttons">
+                        <button class="button" type="submit">Add</button>
+                    </div>
+            </form>
+        {% endif %}
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Current Category Grade</th>
+                    <th scope="col">Weight Percentage</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% if grades %}
+
+                {% for grade in grades %}
+                    <tr>
+                        <th>{{ grade.auto_id }}</th>
+                        <td>{{ grade.category }}</td>
+                        <td>{{ grade.numerator }}/{{ grade.denominator }}</td>
+                        <td>{{ grade.weight }}%</td>
+                    </tr>
+                {% endfor %}
+
+            {% else %}
+                <tr>
+                    <th>E.g.</th>
+                    <td>TESTS</td>
+                    <td>90/100</td>
+                    <td>30%</td>
+                </tr>
+            {% endif %}
+            </tbody>
+        </table>
+
+        {% if template == False %}
+            <br>
+            <h3>Delete Categories (If necessary)</h3>
+            <form action="/grades2" method="post">
+                <div class="select">
+                    <select name="delete_button" id="delete_button">
+                        <option value="" disabled selected>Select a Category</option>
+
+                        {% for grade in grades %}
+                            <option value="{{ grade.category }}">{{ grade.category }}</option>
+                        {% endfor %}
+
+                    </select>
+                </div>
+                <div class="buttons">
+                    <button class="button" type="submit">Delete</button>
+                </div>
+            </form>
+
+            {% if session["user_id"] %}
+                <br>
+                <h3>Save template to courses</h3>
+                <form action="/courses" method="post">
+                    <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="course_name" name="course_name" placeholder="Course Name" type="text">
+                    <div class="buttons">
+                        <button class="button" type="submit">Save</button>
+                    </div>
+                </form>
+                <br><br><hr><br><br>
+            {% else %}
+                <br><br><hr><br><br>
+            {% endif %}
+        {% endif %}
+
+        <h1>Add Upcoming Assignment</h1>
+        <h3>Input an assignment to see the impact on your grade</h3>
+        <br>
+        <form action="/grades3" method="post">
+
+            <span>Category</span>
+            <div class="select">
+                <select name="category" class="category">
+                    {% if selected2 %}
+                        <option value="" disabled>Select a Category</option>
+                    {% else %}
+                        <option value="" disabled selected>Select a Category</option>
+                    {% endif %}
+
+                    {% for grade in grades %}
+                        {% if selected %}
+                            <option value="{{ grade.category }}" selected>{{ grade.category }}</option>
+                        {% else %}
+                            <option value="{{ grade.category }}">{{ grade.category }}</option>
+                        {% endif %}
+                    {% endfor %}
+
+                </select>
+            </div>
+
+            <span>Potential Grade</span>
+            <div class="mb-3">
+                <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="numerator" name="numerator" placeholder="e.g. 90" type="number" value="{{ numerator }}">
+                <h2>out of</h2>
+                <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="denominator" name="denominator" placeholder="90" type="number" value="{{ denominator }}">
+            </div>
+            <div class="buttons">
+                <button class="button" type="submit">Calculate</button>
+            </div>
+
+            {% if final_grade %}
+            <h3>Category: {{ category }}; Potential Grade: {{ numerator }}/{{ denominator }}</h3>
+            <h2>"What if " Grade: {{ final_grade }}%</h2>
+            {% endif %}
+
+        </form>
+        <br><br>
+    </div>
+{% endblock %}
